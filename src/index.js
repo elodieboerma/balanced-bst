@@ -104,4 +104,32 @@ class Tree {
       return node;
     }
   }
+
+  findMin(node) {
+    while (node.left !== null) {
+      node = node.left;
+    }
+    return node;
+  }
+
+  levelOrderForEach(callback) {
+    if (callback === null) {
+        throw Error("Callback parameter is required");
+    }
+    if (this.root === null) {
+      return;
+    }
+    const queue = [this.root];
+    //should be passing value as argument, not node - is it correct?
+    while (queue.length > 0) {
+      const node = queue.shift();
+      callback(node.data);
+      if (node.left !== null) {
+        queue.push(node.left);
+      }
+      if (node.right !== null) {
+        queue.push(node.right);
+      }
+    }
+  }
 }
