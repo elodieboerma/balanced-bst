@@ -198,4 +198,42 @@ class Tree {
       callback(node.data);
     }
   }
+
+  //unsure if correct
+  height(value) {
+    if (this.root === null || !this.includes(value)) { return; }
+    const queue = [value];
+    let count = 0;
+    while (queue.length > 0) {
+        const curNode  = queue.shift();
+        if (curNode.left !== null && curNode.right == null) {
+            queue.push(curNode.left);
+            count++;
+        }
+        if (curNode.left == null && curNode.right !== null) {
+            queue.push(curNode.right);
+            count++;
+        }
+    }
+    return count;
+  }
+
+  //unsure if correct
+  depth(value) {
+    if (this.root === null || !this.includes(value)) { return; }
+    const queue = [value];
+    let count = 0;
+    while (queue.length > 0) {
+        const curNode  = queue.shift();
+        if (curNode.left !== null && curNode.right == null) {
+            queue.push(curNode.left);
+            count++;
+        }
+        if (curNode.left == null && curNode.right !== null) {
+            queue.push(curNode.right);
+            count++;
+        }
+    }
+    return count;
+  }
 }
