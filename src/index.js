@@ -296,3 +296,14 @@ class Tree {
     this.buildTree(newArray);
   }
 }
+
+//driver code
+const arr = [];
+const root = new Tree(arr);
+console.log(`isBalanced: ${isBalanced()}`);
+//print out all elements in level, pre, post, and in order
+//unbalance the tree by adding several numbers whose value is greater than 100
+console.log(`isBalanced: ${isBalanced()}`);
+rebalance();
+console.log(`isBalanced: ${isBalanced()}`);
+//print out all elements in level, pre, post, and in order
