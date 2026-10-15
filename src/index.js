@@ -58,4 +58,20 @@ class Tree {
     };
     return search(this.root, value);
   }
+
+  insert(value) {
+    if (this.includes(value)) { return;}
+    const insertNode = (node, value) => {
+      if (node === null) {
+        return new Node(value);
+      }
+      if (value < node.data) {
+        node.left = insertNode(node.left, value);
+      } else if (value > node.data) {
+        node.right = insertNode(node.right, value);
+      }
+      return node;
+    }
+    this.root = insertNode(this.root, value);
+  }
 }
