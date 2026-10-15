@@ -41,4 +41,21 @@ class Tree {
 
     return root;
   }
+
+  includes(value) {
+    const search = (node, value) => {
+      if (node === null) {
+        return false;
+      }
+      if (node.data === value) {
+        return true;
+      }
+      if (value < node.data) {
+        return search(node.left, value);
+      } else {
+        return search(node.right, value);
+      }
+    };
+    return search(this.root, value);
+  }
 }
