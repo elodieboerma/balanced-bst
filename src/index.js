@@ -60,7 +60,7 @@ class Tree {
   }
 
   insert(value) {
-    if (this.includes(value)) { return;}
+    if (!this.includes(value)) { return;}
     const insertNode = (node, value) => {
       if (node === null) {
         return new Node(value);
@@ -73,5 +73,35 @@ class Tree {
       return node;
     }
     this.root = insertNode(this.root, value);
+  }
+
+  deleteItem(value) {
+    if (!this.includes(value)) { return; }
+    const deleteNode = (node, value) => {
+      if (node === null) {
+        return null;
+      }
+      if (value < node.data) {
+        node.left = deleteNode(node.left, value);
+      } else if (value > node.data) {
+        node.right = deleteNode(node.right, value);
+      } else {
+        // Node to be deleted found
+        if (node.left === null && node.right === null) {
+          return null; // No children
+        } else if (node.left === null) {
+          return node.right; // One child (right)
+        } else if (node.right === null) {
+          return node.left; // One child (left)
+        } else {
+          //not sure if this is correct
+          // Two children
+          const minValueNode = this.findMin(node.right);
+          node.data = minValueNode.data;
+          node.right = deleteNode(node.right, minValueNode.data);
+        }
+      }
+      return node;
+    }
   }
 }
