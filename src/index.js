@@ -291,7 +291,8 @@ class Tree {
         } else if (node.data > node.right.data) {
             newArray.push(node.right);
         }
-    this.inOrderForEach(fixBalance);
     }
+    this.inOrderForEach(fixBalance);
+    this.buildTree(newArray);
   }
 }
