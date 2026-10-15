@@ -248,4 +248,17 @@ class Tree {
     }
     return count;
   }
+
+  isBalanced() {
+    const balanced = (node) => {
+        if ((node.left && node.right) || (!node.left && !node.right)) {
+            return true;
+        } else if (node.left && !node.right) {
+            return "left";
+        } else if (!node.left && node.right) {
+            return "right";
+        }
+    }
+    this.levelOrderForEach(balanced);
+  }
 }
