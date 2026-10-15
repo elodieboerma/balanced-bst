@@ -165,13 +165,14 @@ class Tree {
       return;
     }
     const queue = [this.root];
+    //unsure if correct
     while (queue.length > 0) {
       const node = queue.shift();
       callback(node.data);
-      if (node.left !== null) {
+      if (node.left !== null && (node.left.left !== null || node.left.right !== null)) {
         queue.push(node.left);
       }
-      if (node.right !== null) {
+      if (node.right !== null && (node.right.left !== null || node.right.right !== null)) {
         queue.push(node.right);
       }
     }
@@ -186,6 +187,7 @@ class Tree {
       return;
     }
     const queue = [this.root];
+    //unsure if correct
     while (queue.length > 0) {
       const node = queue.shift();
       if (node.left !== null) {
