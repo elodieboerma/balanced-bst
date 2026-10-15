@@ -27,6 +27,18 @@ class Tree {
     root.left = this.buildTree(array.slice(0, mid));
     root.right = this.buildTree(array.slice(mid + 1));
 
+    const prettyPrint = (node, prefix = '', isLeft = true) => {
+        if (node === null || node === undefined) {
+            return;
+        }
+
+        prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+        console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
+        prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+    };
+
+    prettyPrint(root);
+
     return root;
   }
 }
