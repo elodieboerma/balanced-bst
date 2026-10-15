@@ -298,7 +298,15 @@ class Tree {
 }
 
 //driver code
-const arr = [];
+function randArr(num) {
+    const randArray = [];
+    while (randArray.length > num) {
+        let integer = Math.floor(Math.random() * 99);
+        randArray.push(integer);
+    }
+}
+
+const arr = randArr(15);
 const root = new Tree(arr);
 console.log(`isBalanced: ${isBalanced()}`);
 //print out all elements in level, pre, post, and in order
