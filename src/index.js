@@ -145,7 +145,6 @@ class Tree {
     //unsure if correct
     while (queue.length > 0) {
       const node = queue.shift();
-      callback(node.data);
       while (node.left !== null) {
         queue.push(node.left);
       }
@@ -190,7 +189,7 @@ class Tree {
     //unsure if correct
     while (queue.length > 0) {
       const node = queue.shift();
-      if (node.left !== null) {
+      while (node.left !== null) {
         queue.push(node.left);
       }
       if (node.right !== null) {
