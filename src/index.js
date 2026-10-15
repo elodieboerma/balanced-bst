@@ -15,4 +15,18 @@ class Tree {
     this.array = array;
     this.root = null;
   }
+
+  buildTree(array) {
+    if (array.length === 0 || array[0] > array[array.length - 1]) {
+      return null;
+    }
+
+    const mid = Math.floor(array.length / 2);
+    const root = new Node(array[mid]);
+
+    root.left = this.buildTree(array.slice(0, mid));
+    root.right = this.buildTree(array.slice(mid + 1));
+
+    return root;
+  }
 }
