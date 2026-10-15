@@ -200,6 +200,13 @@ class Tree {
   }
 
   //unsure if correct
+  //maybe use part of this?? 
+  /*findMin(node) {
+    while (node.left !== null) {
+      node = node.left;
+    }
+    return node;
+  }*/
   height(value) {
     if (this.root === null || !this.includes(value)) { return undefined; }
     const queue = [value];
@@ -219,6 +226,13 @@ class Tree {
   }
 
   //unsure if correct
+  //maybe use part of this?? 
+  /*findMin(node) {
+    while (node.left !== null) {
+      node = node.left;
+    }
+    return node;
+  }*/
   depth(value) {
     if (this.root === null || !this.includes(value)) { return undefined; }
     //const queue = [value];
@@ -249,6 +263,7 @@ class Tree {
     return count;
   }
 
+  //unsure if correct
   isBalanced() {
     const balanced = (node) => {
         if ((node.left && node.right) || (!node.left && !node.right)) {
@@ -260,5 +275,23 @@ class Tree {
         }
     }
     this.levelOrderForEach(balanced);
+  }
+
+  //unsure if correct
+  rebalance() {
+    const newArray = [];
+    const queue = [this.root];
+    const fixBalance = (node) => {
+        if (node.left.data < node.data) {
+            newArray.push(node.left);
+        } else if (node.left.data > node.data) {
+            newArray.push(node);
+        } else if (node.data < node.right.data) {
+            newArray.push(node);
+        } else if (node.data > node.right.data) {
+            newArray.push(node.right);
+        }
+    this.inOrderForEach(fixBalance);
+    }
   }
 }
