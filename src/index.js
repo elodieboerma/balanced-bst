@@ -306,7 +306,7 @@ function randArr(num) {
 }
 
 const arr = randArr(15);
-console.log(`${arr}`);
+console.log(`randArr: ${arr}`);
 const root = new Tree(arr);
 console.log(`isBalanced: ${isBalanced()}`);
 //print out all elements in level, pre, post, and in order
