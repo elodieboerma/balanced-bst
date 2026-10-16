@@ -308,10 +308,11 @@ function randArr(num) {
 const arr = randArr(15);
 console.log(`randArr: ${arr}`);
 const root = new Tree(arr);
-console.log(`isBalanced: ${this.isBalanced()}`);
+console.log(`isBalanced: ${this.isBalanced()}`); //true
 //print out all elements in level, pre, post, and in order
-//unbalance the tree by adding several numbers whose value is greater than 100
-console.log(`isBalanced: ${this.isBalanced()}`);
+arr.push(103,234,546,782,159);
+console.log(`edited randArr: ${arr}`);
+console.log(`isBalanced: ${this.isBalanced()}`); //false
 this.rebalance();
-console.log(`isBalanced: ${this.isBalanced()}`);
+console.log(`isBalanced: ${this.isBalanced()}`); //true
 //print out all elements in level, pre, post, and in order
