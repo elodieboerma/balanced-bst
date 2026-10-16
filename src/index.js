@@ -122,6 +122,7 @@ class Tree {
     while (queue.length > 0) {
       const node = queue.shift();
       callback(node.data);
+      console.log(`node.data: ${node.data}`);
       if (node.left !== null) {
         queue.push(node.left);
       }
