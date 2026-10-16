@@ -1,9 +1,6 @@
 This project is meant to help me practice creating binary search trees, particularly balanced ones.
 
 
-    *2 (once git push origin main has been run once):
-        git branch gh-pages
-        --don't forget to switch source branch to this in github pages*
     *3 (to run ESLint on any file or directory): npx eslint yourfile.js*
     *4 (to run Prettier on everything): npx prettier . --write
         (to run it on a certain directory): prettier --write app/
