@@ -321,7 +321,7 @@ root.inOrderForEach(console.log());
 arr.push(103,234,546,782,159); //unbalance tree
 console.log(`edited randArr: ${arr}`);
 console.log(`isBalanced: ${root.isBalanced()}`); //false
-this.rebalance();
+root.rebalance();
 console.log(`isBalanced: ${root.isBalanced()}`); //true
 //print out all elements in level, pre, post, and in order
 console.log("level order:")
