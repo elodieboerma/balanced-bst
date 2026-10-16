@@ -308,27 +308,27 @@ function randArr(num) {
 const arr = randArr(15);
 console.log(`randArr: ${arr}`);
 const root = new Tree(arr);
-console.log(`isBalanced: ${this.isBalanced()}`); //true
+console.log(`isBalanced: ${root.isBalanced()}`); //true
 //print out all elements in level, pre, post, and in order
 console.log("level order:")
-levelOrderForEach(console.log());
+root.levelOrderForEach(console.log());
 console.log("pre order:")
-preOrderForEach(console.log());
+root.preOrderForEach(console.log());
 console.log("post order:")
-postOrderForEach(console.log());
+root.postOrderForEach(console.log());
 console.log("in order:")
-inOrderForEach(console.log());
+root.inOrderForEach(console.log());
 arr.push(103,234,546,782,159); //unbalance tree
 console.log(`edited randArr: ${arr}`);
-console.log(`isBalanced: ${this.isBalanced()}`); //false
+console.log(`isBalanced: ${root.isBalanced()}`); //false
 this.rebalance();
-console.log(`isBalanced: ${this.isBalanced()}`); //true
+console.log(`isBalanced: ${root.isBalanced()}`); //true
 //print out all elements in level, pre, post, and in order
 console.log("level order:")
-levelOrderForEach(console.log());
+root.levelOrderForEach(console.log());
 console.log("pre order:")
-preOrderForEach(console.log());
+root.preOrderForEach(console.log());
 console.log("post order:")
-postOrderForEach(console.log());
+root.postOrderForEach(console.log());
 console.log("in order:")
-inOrderForEach(console.log());
+root.inOrderForEach(console.log());
