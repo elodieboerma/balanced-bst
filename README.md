@@ -1,7 +1,6 @@
 This project is meant to help me practice creating binary search trees, particularly balanced ones.
 
 
-    *1 (install it if images are referenced directly in HTML file) npm install --save-dev html-loader*
     *2 (once git push origin main has been run once):
         git branch gh-pages
         --don't forget to switch source branch to this in github pages*

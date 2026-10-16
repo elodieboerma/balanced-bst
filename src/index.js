@@ -1,7 +1,5 @@
 //be sure to always remove duplicate values or check for an existing value before inserting a new one
 
-import "./styles.css";
-
 class Node {
   constructor(data) {
     this.data = data;
@@ -300,13 +298,15 @@ class Tree {
 //driver code
 function randArr(num) {
     const randArray = [];
-    while (randArray.length > num) {
+    while (randArray.length !== num) {
         let integer = Math.floor(Math.random() * 99);
         randArray.push(integer);
     }
+    return randArray;
 }
 
 const arr = randArr(15);
+console.log(`${arr}`);
 const root = new Tree(arr);
 console.log(`isBalanced: ${isBalanced()}`);
 //print out all elements in level, pre, post, and in order
