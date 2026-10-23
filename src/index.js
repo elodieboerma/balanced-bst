@@ -118,6 +118,7 @@ class Tree {
       return;
     }
     const queue = [this.root];
+    console.log(`queue: ${queue}`);
     //should be passing value as argument, not node - is it correct?
     while (queue.length > 0) {
       const node = queue.shift();
@@ -308,28 +309,29 @@ function randArr(num) {
 
 const arr = randArr(15);
 console.log(`randArr: ${arr}`);
-const root = new Tree(arr);
-console.log(`isBalanced: ${root.isBalanced()}`); //true
+const tree = new Tree(arr);
+console.log(`tree: ${JSON.toString(tree)}`);
+console.log(`isBalanced: ${tree.isBalanced()}`); //true
 //print out all elements in level, pre, post, and in order
 console.log("level order:")
-root.levelOrderForEach(console.log());
+tree.levelOrderForEach(console.log());
 console.log("pre order:")
-root.preOrderForEach(console.log());
+tree.preOrderForEach(console.log());
 console.log("post order:")
-root.postOrderForEach(console.log());
+tree.postOrderForEach(console.log());
 console.log("in order:")
-root.inOrderForEach(console.log());
+tree.inOrderForEach(console.log());
 arr.push(103,234,546,782,159); //unbalance tree
 console.log(`edited randArr: ${arr}`);
-console.log(`isBalanced: ${root.isBalanced()}`); //false
-root.rebalance();
-console.log(`isBalanced: ${root.isBalanced()}`); //true
+console.log(`isBalanced: ${tree.isBalanced()}`); //false
+tree.rebalance();
+console.log(`isBalanced: ${tree.isBalanced()}`); //true
 //print out all elements in level, pre, post, and in order
 console.log("level order:")
-root.levelOrderForEach(console.log());
+tree.levelOrderForEach(console.log());
 console.log("pre order:")
-root.preOrderForEach(console.log());
+tree.preOrderForEach(console.log());
 console.log("post order:")
-root.postOrderForEach(console.log());
+tree.postOrderForEach(console.log());
 console.log("in order:")
-root.inOrderForEach(console.log());
+tree.inOrderForEach(console.log());
