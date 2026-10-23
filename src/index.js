@@ -118,10 +118,12 @@ class Tree {
       return;
     }
     const queue = [this.root];
+    console.log(`this.root: ${this.root}`);
     console.log(`queue: ${queue}`);
     //should be passing value as argument, not node - is it correct?
     while (queue.length > 0) {
       const node = queue.shift();
+      console.log(`node.data: ${node.data}`);
       callback(node.data);
       console.log(`node.data: ${node.data}`);
       if (node.left !== null) {
@@ -266,6 +268,8 @@ class Tree {
   //unsure if correct
   isBalanced() {
     const balanced = (node) => {
+      //says cannot read properties of undefined when reading "left"
+      console.log(`node: ${JSON.toString(node)}`);
         if ((node.left && node.right) || (!node.left && !node.right)) {
             console.log(`neither/both: node.left: ${node.left}; node.right ${node.right}`);
             return true;
