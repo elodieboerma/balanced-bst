@@ -310,7 +310,7 @@ function randArr(num) {
 const arr = randArr(15);
 console.log(`randArr: ${arr}`);
 const tree = new Tree(arr);
-console.log(`tree: ${JSON.toString(tree)}`);
+tree.buildTree(tree.array);
 console.log(`isBalanced: ${tree.isBalanced()}`); //true
 //print out all elements in level, pre, post, and in order
 console.log("level order:")
