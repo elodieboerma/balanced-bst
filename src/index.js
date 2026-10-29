@@ -263,11 +263,30 @@ class Tree {
   }
 
   //unsure if correct
-  isBalanced() {
-    const balanced = (node) => {
+  isBalanced(value) {
+    const balanced = () => {
+      if (this.root === null || !this.includes(value)) { return undefined; }
+    const queue = [value];
+    let count = 0;
+    while (queue.length > 0) {
+        const curNode  = queue.shift();
+        if (curNode.left !== null && curNode.right == null) {
+            queue.push(curNode.left);
+            count++;
+        }
+        if (curNode.left == null && curNode.right !== null) {
+            queue.push(curNode.right);
+            count++;
+        }
+        if (curNode.left != null && curNode.right != null) {
+          queue.push(curNode.left);
+          queue.push(curNode.right);
+        }
+      if (count >= 2) { return false; }
+    }
+    if (count <=2) { return true; }
       //says cannot read properties of undefined when reading "left"
-      console.log(`typeof node: ${typeof node}`);
-      console.log(`node.data: ${JSON.stringify(node.data)}`);
+      /*const balanced = (node) => {
         if ((node.left && node.right) || (!node.left && !node.right)) {
             console.log(`neither/both: node.left: ${node.left}; node.right ${node.right}`);
             return true;
@@ -278,6 +297,7 @@ class Tree {
             console.log(`no node.left; node.right ${node.right}`);
             return "right";
         }
+      }*/
     }
     this.levelOrderForEach(balanced);
   }
