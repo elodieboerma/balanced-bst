@@ -6,14 +6,14 @@ class Node {
   }
 }
 
-function prettyPrint(node, prefix = '', isLeft = true) {
+function prettyPrint(node, prefix = "", isLeft = true) {
   if (node === null || node === undefined) {
     return;
   }
 
-  prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
-  console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
-  prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+  prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+  prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
 }
 
 class Tree {
@@ -66,7 +66,7 @@ class Tree {
         node.right = insertNode(node.right, value);
       }
       return node;
-    }
+    };
     this.root = insertNode(this.root, value);
   }
 
@@ -108,8 +108,8 @@ class Tree {
   }
 
   levelOrderForEach(callback) {
-    if (typeof callback !== 'function') {
-      throw new Error('Callback parameter is required');
+    if (typeof callback !== "function") {
+      throw new Error("Callback parameter is required");
     }
     if (this.root === null) {
       return;
@@ -129,8 +129,8 @@ class Tree {
 
   //left,root,right
   inOrderForEach(callback) {
-    if (typeof callback !== 'function') {
-      throw new Error('Callback parameter is required');
+    if (typeof callback !== "function") {
+      throw new Error("Callback parameter is required");
     }
     const traverse = (node) => {
       if (node === null) return;
@@ -143,8 +143,8 @@ class Tree {
 
   //root,left,right
   preOrderForEach(callback) {
-    if (typeof callback !== 'function') {
-      throw new Error('Callback parameter is required');
+    if (typeof callback !== "function") {
+      throw new Error("Callback parameter is required");
     }
     const traverse = (node) => {
       if (node === null) return;
@@ -157,8 +157,8 @@ class Tree {
 
   //left,right,root
   postOrderForEach(callback) {
-    if (typeof callback !== 'function') {
-      throw new Error('Callback parameter is required');
+    if (typeof callback !== "function") {
+      throw new Error("Callback parameter is required");
     }
     const traverse = (node) => {
       if (node === null) return;
@@ -208,20 +208,20 @@ class Tree {
   }
 
   isBalanced() {
-  const checkHeight = (node) => {
-    if (node === null) return 0;
+    const checkHeight = (node) => {
+      if (node === null) return 0;
 
-    const leftHeight = checkHeight(node.left);
-    if (leftHeight === -1) return -1;
+      const leftHeight = checkHeight(node.left);
+      if (leftHeight === -1) return -1;
 
-    const rightHeight = checkHeight(node.right);
-    if (rightHeight === -1 || Math.abs(leftHeight - rightHeight) > 1) {
-      return -1;
-    }
+      const rightHeight = checkHeight(node.right);
+      if (rightHeight === -1 || Math.abs(leftHeight - rightHeight) > 1) {
+        return -1;
+      }
 
-    return Math.max(leftHeight, rightHeight) + 1;
-  };
-  return checkHeight(this.root) !== -1;
+      return Math.max(leftHeight, rightHeight) + 1;
+    };
+    return checkHeight(this.root) !== -1;
   }
 
   rebalance() {
@@ -244,10 +244,10 @@ class Tree {
 const printAsList = (label, traverse) => {
   const values = [];
   traverse((value) => values.push(value));
-  console.log(`${label}: [${values.join(', ')}]`);
+  console.log(`${label}: [${values.join(", ")}]`);
 };
 
-const arr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 console.log(`arr: ${arr}`);
 const tree = new Tree(arr);
 tree.root = tree.buildTree(arr);
@@ -255,27 +255,27 @@ prettyPrint(tree.root);
 
 console.log(`isBalanced: ${tree.isBalanced()}`); //true
 //print out all elements in level, pre, post, and in order
-printAsList('level order', tree.levelOrderForEach.bind(tree));
-printAsList('preorder', tree.preOrderForEach.bind(tree));
-printAsList('postorder', tree.postOrderForEach.bind(tree));
-printAsList('inorder', tree.inOrderForEach.bind(tree));
+printAsList("level order", tree.levelOrderForEach.bind(tree));
+printAsList("preorder", tree.preOrderForEach.bind(tree));
+printAsList("postorder", tree.postOrderForEach.bind(tree));
+printAsList("inorder", tree.inOrderForEach.bind(tree));
 for (const value of [103, 234, 546, 782, 159]) {
   tree.insert(value);
 }
-console.log('Tree before rebalance:');
+console.log("Tree before rebalance:");
 prettyPrint(tree.root);
 console.log(`isBalanced: ${tree.isBalanced()}`); //false
 tree.rebalance();
-console.log('Tree after rebalance:');
+console.log("Tree after rebalance:");
 prettyPrint(tree.root);
 console.log(`isBalanced: ${tree.isBalanced()}`); //true
 //print out all elements in level, pre, post, and in order
-printAsList('level order', tree.levelOrderForEach.bind(tree));
-printAsList('preorder', tree.preOrderForEach.bind(tree));
-printAsList('postorder', tree.postOrderForEach.bind(tree));
-printAsList('inorder', tree.inOrderForEach.bind(tree));
+printAsList("level order", tree.levelOrderForEach.bind(tree));
+printAsList("preorder", tree.preOrderForEach.bind(tree));
+printAsList("postorder", tree.postOrderForEach.bind(tree));
+printAsList("inorder", tree.inOrderForEach.bind(tree));
 
 tree.deleteItem(10);
-printAsList('array', tree.inOrderForEach.bind(tree));
+printAsList("array", tree.inOrderForEach.bind(tree));
 console.log(`height of 9: ${tree.height(9)}`);
 console.log(`depth of 9: ${tree.depth(9)}`);
