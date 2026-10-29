@@ -1,5 +1,3 @@
-//be sure to always remove duplicate values or check for an existing value before inserting a new one
-
 class Node {
   constructor(data) {
     this.data = data;
@@ -110,18 +108,16 @@ class Tree {
   }
 
   levelOrderForEach(callback) {
-    if (callback === null) {
-        throw Error("Callback parameter is required");
+    if (typeof callback !== 'function') {
+      throw new Error('Callback parameter is required');
     }
     if (this.root === null) {
       return;
     }
     const queue = [this.root];
-    console.log(`this.root: ${this.root}`);
-    console.log(`queue: ${queue}`);
     while (queue.length > 0) {
       const node = queue.shift();
-      callback(node);
+      callback(node.data);
       if (node.left !== null) {
         queue.push(node.left);
       }
@@ -133,68 +129,44 @@ class Tree {
 
   //left,root,right
   inOrderForEach(callback) {
-    if (callback === null) {
-        throw Error("Callback parameter is required");
+    if (typeof callback !== 'function') {
+      throw new Error('Callback parameter is required');
     }
-    if (this.root === null) {
-      return;
-    }
-    const queue = [this.root];
-    //unsure if correct
-    while (queue.length > 0) {
-      const node = queue.shift();
-      while (node.left !== null) {
-        queue.push(node.left);
-      }
+    const traverse = (node) => {
+      if (node === null) return;
+      traverse(node.left);
       callback(node.data);
-      if (node.right !== null) {
-        queue.push(node.right);
-      }
-    }
+      traverse(node.right);
+    };
+    traverse(this.root);
   }
 
   //root,left,right
   preOrderForEach(callback) {
-    if (callback === null) {
-        throw Error("Callback parameter is required");
+    if (typeof callback !== 'function') {
+      throw new Error('Callback parameter is required');
     }
-    if (this.root === null) {
-      return;
-    }
-    const queue = [this.root];
-    //unsure if correct
-    while (queue.length > 0) {
-      const node = queue.shift();
+    const traverse = (node) => {
+      if (node === null) return;
       callback(node.data);
-      if (node.left !== null && (node.left.left !== null || node.left.right !== null)) {
-        queue.push(node.left);
-      }
-      if (node.right !== null && (node.right.left !== null || node.right.right !== null)) {
-        queue.push(node.right);
-      }
-    }
+      traverse(node.left);
+      traverse(node.right);
+    };
+    traverse(this.root);
   }
 
   //left,right,root
   postOrderForEach(callback) {
-    if (callback === null) {
-        throw Error("Callback parameter is required");
+    if (typeof callback !== 'function') {
+      throw new Error('Callback parameter is required');
     }
-    if (this.root === null) {
-      return;
-    }
-    const queue = [this.root];
-    //unsure if correct
-    while (queue.length > 0) {
-      const node = queue.shift();
-      while (node.left !== null) {
-        queue.push(node.left);
-      }
-      if (node.right !== null) {
-        queue.push(node.right);
-      }
+    const traverse = (node) => {
+      if (node === null) return;
+      traverse(node.left);
+      traverse(node.right);
       callback(node.data);
-    }
+    };
+    traverse(this.root);
   }
 
   height(value) {
@@ -220,28 +192,11 @@ class Tree {
     return count;
   }
 
-  //unsure if correct
-  //maybe use part of this?? 
-  /*findMin(node) {
-    while (node.left !== null) {
-      node = node.left;
-    }
-    return node;
-  }*/
   depth(value) {
     if (this.root === null || !this.includes(value)) { return undefined; }
     //const queue = [value];
     let count = 0;
     while (queue.length > 0) {
-        /*const curNode  = queue.shift();
-        if (curNode.left !== null && curNode.right == null) {
-            queue.push(curNode.left);
-            count++;
-        }
-        if (curNode.left == null && curNode.right !== null) {
-            queue.push(curNode.right);
-            count++;
-        }*/
         const search = (node, value) => {
             if (node.data === value) {
                 count++;
@@ -292,23 +247,27 @@ class Tree {
 }
 
 //driver code
-const arr = [10,1,9,2,14,3,15,4,12,5,11,6,7,13,8]
+const printAsList = (label, traverse) => {
+  const values = [];
+  traverse((value) => values.push(value));
+  console.log(`${label}: [${values.join(', ')}]`);
+};
+
+const arr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 console.log(`arr: ${arr}`);
 const tree = new Tree(arr);
 tree.root = tree.buildTree(arr);
+prettyPrint(tree.root);
 
 console.log(`isBalanced: ${tree.isBalanced()}`); //true
 //print out all elements in level, pre, post, and in order
-console.log("level order:")
-tree.levelOrderForEach(console.log);
-console.log("pre order:")
-tree.preOrderForEach(console.log);
-console.log("post order:")
-tree.postOrderForEach(console.log);
-console.log("in order:")
-tree.inOrderForEach(console.log);
-arr.push(103,234,546,782,159); //unbalance tree
-console.log(`edited randArr: ${arr}`);
+printAsList('level order', tree.levelOrderForEach.bind(tree));
+printAsList('preorder', tree.preOrderForEach.bind(tree));
+printAsList('postorder', tree.postOrderForEach.bind(tree));
+printAsList('inorder', tree.inOrderForEach.bind(tree));
+for (const value of [103, 234, 546, 782, 159]) {
+  tree.insert(value);
+}
 console.log('Tree before rebalance:');
 prettyPrint(tree.root);
 console.log(`isBalanced: ${tree.isBalanced()}`); //false
@@ -317,11 +276,7 @@ console.log('Tree after rebalance:');
 prettyPrint(tree.root);
 console.log(`isBalanced: ${tree.isBalanced()}`); //true
 //print out all elements in level, pre, post, and in order
-console.log("level order:")
-tree.levelOrderForEach(console.log);
-console.log("pre order:")
-tree.preOrderForEach(console.log);
-console.log("post order:")
-tree.postOrderForEach(console.log);
-console.log("in order:")
-tree.inOrderForEach(console.log);
+printAsList('level order', tree.levelOrderForEach.bind(tree));
+printAsList('preorder', tree.preOrderForEach.bind(tree));
+printAsList('postorder', tree.postOrderForEach.bind(tree));
+printAsList('inorder', tree.inOrderForEach.bind(tree));
