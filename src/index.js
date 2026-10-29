@@ -201,14 +201,6 @@ class Tree {
     }
   }
 
-  //unsure if correct
-  //maybe use part of this?? 
-  /*findMin(node) {
-    while (node.left !== null) {
-      node = node.left;
-    }
-    return node;
-  }*/
   height(value) {
     if (this.root === null || !this.includes(value)) { return undefined; }
     const queue = [value];
@@ -222,6 +214,11 @@ class Tree {
         if (curNode.left == null && curNode.right !== null) {
             queue.push(curNode.right);
             count++;
+        }
+        if (curNode.left != null && curNode.right != null) {
+          queue.push(curNode.left);
+          queue.push(curNode.right);
+          count++;
         }
     }
     return count;
