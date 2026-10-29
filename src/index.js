@@ -71,7 +71,6 @@ class Tree {
   }
 
   deleteItem(value) {
-    if (!this.includes(value)) { return; }
     const deleteNode = (node, value) => {
       if (node === null) {
         return null;
@@ -89,7 +88,6 @@ class Tree {
         } else if (node.right === null) {
           return node.left; // One child (left)
         } else {
-          //not sure if this is correct
           // Two children
           const minValueNode = this.findMin(node.right);
           node.data = minValueNode.data;
@@ -97,7 +95,9 @@ class Tree {
         }
       }
       return node;
-    }
+    };
+
+    this.root = deleteNode(this.root, value);
   }
 
   findMin(node) {
@@ -170,47 +170,41 @@ class Tree {
   }
 
   height(value) {
-    if (this.root === null || !this.includes(value)) { return undefined; }
-    const queue = [value];
-    let count = 0;
-    while (queue.length > 0) {
-        const curNode  = queue.shift();
-        if (curNode.left !== null && curNode.right == null) {
-            queue.push(curNode.left);
-            count++;
-        }
-        if (curNode.left == null && curNode.right !== null) {
-            queue.push(curNode.right);
-            count++;
-        }
-        if (curNode.left != null && curNode.right != null) {
-          queue.push(curNode.left);
-          queue.push(curNode.right);
-          count++;
-        }
+    const findNode = (node) => {
+      if (node === null || node.data === value) {
+        return node;
+      }
+      return value < node.data ? findNode(node.left) : findNode(node.right);
+    };
+
+    const target = findNode(this.root);
+    if (target === null) {
+      return undefined;
     }
-    return count;
+
+    const measureHeight = (node) => {
+      if (node === null) {
+        return -1;
+      }
+      return 1 + Math.max(measureHeight(node.left), measureHeight(node.right));
+    };
+
+    return measureHeight(target);
   }
 
   depth(value) {
-    if (this.root === null || !this.includes(value)) { return undefined; }
-    //const queue = [value];
-    let count = 0;
-    while (queue.length > 0) {
-        const search = (node, value) => {
-            if (node.data === value) {
-                count++;
-            }
-            if (value < node.data) {
-              count++
-              return search(node.left, value);
-            } else {
-              count++
-              return search(node.right, value);
-            }
-        };
+    let node = this.root;
+    let depth = 0;
+
+    while (node !== null) {
+      if (node.data === value) {
+        return depth;
+      }
+      node = value < node.data ? node.left : node.right;
+      depth++;
     }
-    return count;
+
+    return undefined;
   }
 
   isBalanced() {
@@ -280,3 +274,8 @@ printAsList('level order', tree.levelOrderForEach.bind(tree));
 printAsList('preorder', tree.preOrderForEach.bind(tree));
 printAsList('postorder', tree.postOrderForEach.bind(tree));
 printAsList('inorder', tree.inOrderForEach.bind(tree));
+
+tree.deleteItem(10);
+printAsList('array', tree.inOrderForEach.bind(tree));
+console.log(`height of 9: ${tree.height(9)}`);
+console.log(`depth of 9: ${tree.depth(9)}`);
