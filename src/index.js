@@ -124,7 +124,7 @@ class Tree {
     while (queue.length > 0) {
       const node = queue.shift();
       console.log(`node.data: ${node.data}`);
-      callback(node.data);
+      callback(node);
       console.log(`node.data: ${node.data}`);
       if (node.left !== null) {
         queue.push(node.left);
@@ -263,28 +263,36 @@ class Tree {
   }
 
   //unsure if correct
-  isBalanced(value) {
+  isBalanced(node) {
     const balanced = () => {
       if (this.root === null || !this.includes(value)) { return undefined; }
-    const queue = [value];
+    const queue = [node];
     let count = 0;
+    console.log(`count: ${count}`);
     while (queue.length > 0) {
         const curNode  = queue.shift();
+        console.log(`curNode: ${curNode}`);
         if (curNode.left !== null && curNode.right == null) {
             queue.push(curNode.left);
             count++;
+            console.log(`count: ${count}`);
         }
         if (curNode.left == null && curNode.right !== null) {
             queue.push(curNode.right);
             count++;
+            console.log(`count: ${count}`);
         }
         if (curNode.left != null && curNode.right != null) {
           queue.push(curNode.left);
           queue.push(curNode.right);
         }
-      if (count >= 2) { return false; }
+      if (count > 1) { 
+            console.log(`count: ${count}`);
+            return false; }
     }
-    if (count <=2) { return true; }
+    if (count < 2) { 
+            console.log(`count: ${count}`);
+            return true; }
       //says cannot read properties of undefined when reading "left"
       /*const balanced = (node) => {
         if ((node.left && node.right) || (!node.left && !node.right)) {
