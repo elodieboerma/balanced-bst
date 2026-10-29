@@ -8,6 +8,16 @@ class Node {
   }
 }
 
+function prettyPrint(node, prefix = '', isLeft = true) {
+  if (node === null || node === undefined) {
+    return;
+  }
+
+  prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+  console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
+  prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+}
+
 class Tree {
   constructor(array) {
     this.array = array;
@@ -24,19 +34,6 @@ class Tree {
 
     root.left = this.buildTree(array.slice(0, mid));
     root.right = this.buildTree(array.slice(mid + 1));
-
-    const prettyPrint = (node, prefix = '', isLeft = true) => {
-        if (node === null || node === undefined) {
-            return;
-        }
-
-        prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
-        console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
-        prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
-    };
-
-    prettyPrint(root);
-
     return root;
   }
 
@@ -58,7 +55,9 @@ class Tree {
   }
 
   insert(value) {
-    if (!this.includes(value)) { return;}
+    if (this.includes(value)) {
+      return;
+    }
     const insertNode = (node, value) => {
       if (node === null) {
         return new Node(value);
@@ -120,12 +119,9 @@ class Tree {
     const queue = [this.root];
     console.log(`this.root: ${this.root}`);
     console.log(`queue: ${queue}`);
-    //should be passing value as argument, not node - is it correct?
     while (queue.length > 0) {
       const node = queue.shift();
-      console.log(`node.data: ${node.data}`);
       callback(node);
-      console.log(`node.data: ${node.data}`);
       if (node.left !== null) {
         queue.push(node.left);
       }
@@ -262,76 +258,45 @@ class Tree {
     return count;
   }
 
-  //unsure if correct
-  isBalanced(node) {
-    const balanced = () => {
-      if (this.root === null || !this.includes(value)) { return undefined; }
-    const queue = [node];
-    let count = 0;
-    console.log(`count: ${count}`);
-    while (queue.length > 0) {
-        const curNode  = queue.shift();
-        console.log(`curNode: ${curNode}`);
-        if (curNode.left !== null && curNode.right == null) {
-            queue.push(curNode.left);
-            count++;
-            console.log(`count: ${count}`);
-        }
-        if (curNode.left == null && curNode.right !== null) {
-            queue.push(curNode.right);
-            count++;
-            console.log(`count: ${count}`);
-        }
-        if (curNode.left != null && curNode.right != null) {
-          queue.push(curNode.left);
-          queue.push(curNode.right);
-        }
+  isBalanced() {
+  const checkHeight = (node) => {
+    if (node === null) return 0;
+
+    const leftHeight = checkHeight(node.left);
+    if (leftHeight === -1) return -1;
+
+    const rightHeight = checkHeight(node.right);
+    if (rightHeight === -1 || Math.abs(leftHeight - rightHeight) > 1) {
+      return -1;
     }
-    if (count > 1) { 
-      console.log(`count: ${count}`);
-      return false; 
-    } else if (count < 2) {
-      console.log(`count: ${count}`);
-      return true;
-    }
-    }
-    this.levelOrderForEach(balanced);
+
+    return Math.max(leftHeight, rightHeight) + 1;
+  };
+  return checkHeight(this.root) !== -1;
   }
 
-  //unsure if correct
   rebalance() {
-    const newArray = [];
-    const queue = [this.root];
-    const fixBalance = (node) => {
-        if (node.left.data < node.data) {
-            newArray.push(node.left);
-        } else if (node.left.data > node.data) {
-            newArray.push(node);
-        } else if (node.data < node.right.data) {
-            newArray.push(node);
-        } else if (node.data > node.right.data) {
-            newArray.push(node.right);
-        }
-    }
-    this.inOrderForEach(fixBalance);
-    this.buildTree(newArray);
+    const values = [];
+    const collectInOrder = (node) => {
+      if (node === null) {
+        return;
+      }
+      collectInOrder(node.left);
+      values.push(node.data);
+      collectInOrder(node.right);
+    };
+
+    collectInOrder(this.root);
+    this.root = this.buildTree(values);
   }
 }
 
 //driver code
-function randArr(num) {
-    const randArray = [];
-    while (randArray.length !== num) {
-        let integer = Math.floor(Math.random() * 99);
-        randArray.push(integer);
-    }
-    return randArray;
-}
-
-const arr = randArr(15);
-console.log(`randArr: ${arr}`);
+const arr = [10,1,9,2,14,3,15,4,12,5,11,6,7,13,8]
+console.log(`arr: ${arr}`);
 const tree = new Tree(arr);
-tree.buildTree(tree.array);
+tree.root = tree.buildTree(arr);
+
 console.log(`isBalanced: ${tree.isBalanced()}`); //true
 //print out all elements in level, pre, post, and in order
 console.log("level order:")
@@ -344,8 +309,12 @@ console.log("in order:")
 tree.inOrderForEach(console.log);
 arr.push(103,234,546,782,159); //unbalance tree
 console.log(`edited randArr: ${arr}`);
+console.log('Tree before rebalance:');
+prettyPrint(tree.root);
 console.log(`isBalanced: ${tree.isBalanced()}`); //false
 tree.rebalance();
+console.log('Tree after rebalance:');
+prettyPrint(tree.root);
 console.log(`isBalanced: ${tree.isBalanced()}`); //true
 //print out all elements in level, pre, post, and in order
 console.log("level order:")
